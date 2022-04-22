@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 
 class PlaySoundOnTap {
@@ -8,10 +10,14 @@ class PlaySoundOnTap {
   static const gameOverPath = 'game_over.mp3';
 
   static void play() {
-    player.play(tapPath);
+    if (!Platform.isWindows) {
+      player.play(tapPath);
+    }
   }
 
   static void playGameOver() {
-    player.play(gameOverPath);
+    if (!Platform.isWindows) {
+      player.play(gameOverPath);
+    }
   }
 }
