@@ -1,59 +1,70 @@
+// ignore_for_file: file_names
+
 import 'package:app/pages/EndGame.dart';
 import 'package:app/pages/game/Board.dart';
-import 'package:app/pages/game/MoveBoard.dart';
+import 'package:app/pages/game/GameInfo.dart';
 import 'package:app/pages/game/Tile.dart';
+import 'package:app/utils/PlaySoundOnTap.dart';
 import 'package:flutter/material.dart';
-import 'package:app/utils/Utils.dart';
+import 'package:app/utils/ChangePage.dart';
 
 class MyPainter extends CustomPainter {
-  MoveBoard move;
+  GameInfo info;
   Board board;
   BuildContext context;
 
-  MyPainter(this.board, this.context) : move = board.move;
-
-  void endGame() {
-    move.gameOver = true;
-    storeScore(move.score);
-    Future.delayed(Duration.zero, () {
-      Utils.changePage(context, EndGame(move.score));
-    });
-  }
-
-  void storeScore(int score) {}
+  MyPainter(this.board, this.context) : info = board.info;
 
   @override
   void paint(Canvas canvas, Size size) {
     board.paint(canvas, size);
 
-    if (move.onTap) {
-      move.onTap = false;
-      Tile pressedTile = board.getTileAtPos(move.pos, size);
+    gameLogic(size);
+
+    paintScore(canvas, size);
+  }
+
+  void gameLogic(Size size) {
+    if (info.onTap) {
+      info.onTap = false;
+      Tile pressedTile = board.getTileAtPos(info.pos, size);
 
       if (pressedTile.isToPressed && !pressedTile.pressed) {
-        move.increaseScore();
-        move.increaseSpeed();
+        PlaySoundOnTap.play();
+        info.increaseScore();
+        info.increaseSpeed();
         pressedTile.pressed = true;
       } else {
         endGame();
       }
     }
 
-    if (move.x >= (size.height / (Board.nrLines - 1))) {
-      move.x = 0;
+    if (info.x >= (size.height / (Board.nrLines - 1))) {
+      info.x = 0;
       board.addNewLine();
       if (board.blackTileOnBottomLine()) {
         endGame();
       }
     }
-
-    paintScore(canvas, size);
   }
+
+  void endGame() {
+    info.gameOver = true;
+    PlaySoundOnTap.playGameOver();
+
+    storeScore(info.score);
+
+    Future.delayed(Duration.zero, () {
+      ChangePage.change(context, EndGame(info.score));
+    });
+  }
+
+  void storeScore(int score) {}
 
   void paintScore(Canvas canvas, Size size) {
     var textPainter = TextPainter(
       text: TextSpan(
-        text: '${move.score}',
+        text: '${info.score}',
         style: const TextStyle(
           color: Colors.red,
           fontSize: 32,

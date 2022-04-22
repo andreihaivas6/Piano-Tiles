@@ -1,11 +1,13 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 
-class MoveBoard {
+class GameInfo {
   static const double increaseSpeedvalue = 1;
   static const int thresholdToIncreaseSpeed = 10;
 
   double x = 0;
-  double addX = 3;
+  double addX = 5;
   int score = 0;
 
   bool onTap = false;
@@ -14,8 +16,8 @@ class MoveBoard {
   bool gameOver = false;
 
   void increaseSpeed() {
-    if (score != 0 && score % MoveBoard.thresholdToIncreaseSpeed == 0) {
-      addX += MoveBoard.increaseSpeedvalue;
+    if (score != 0 && score % GameInfo.thresholdToIncreaseSpeed == 0) {
+      addX += GameInfo.increaseSpeedvalue;
     }
   }
 

@@ -1,4 +1,6 @@
-import 'package:app/utils/Utils.dart';
+// ignore_for_file: file_names, use_key_in_widget_constructors
+
+import 'package:app/utils/ChangePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -21,10 +23,10 @@ class MenuState extends State<Menu> {
             child: Column(
               children: [
                 ButtonFactory.getButton(
-                    'Play game', () => {Utils.changePage(context, Game())}),
+                    'Play game', () => {ChangePage.change(context, Game())}),
                 WhiteSpace.getWhiteSpace(0.5),
                 ButtonFactory.getButton('Highscores',
-                    () => {Utils.changePage(context, Highscore())}),
+                    () => {ChangePage.change(context, Highscore())}),
                 WhiteSpace.getWhiteSpace(1),
                 WhiteSpace.getWhiteSpace(1),
                 ButtonFactory.getButton(

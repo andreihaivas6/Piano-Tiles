@@ -1,18 +1,19 @@
-import 'dart:async';
+// ignore_for_file: file_names
+
 import 'dart:math';
 
-import 'package:app/pages/game/MoveBoard.dart';
+import 'package:app/pages/game/GameInfo.dart';
 import 'package:app/pages/game/Tile.dart';
 import 'package:flutter/material.dart';
 
 class Board {
   static const int nrLines = 5, nrColumns = 4;
 
-  MoveBoard move;
+  GameInfo info;
 
   late List<List<Tile>> tiles = List<List<Tile>>.empty(growable: true);
 
-  Board(this.move) {
+  Board(this.info) {
     initCanvas();
   }
 
@@ -49,8 +50,8 @@ class Board {
     double tileHeight = size.height / (Board.nrLines - 1);
 
     int i = Board.nrLines -
-        ((pos.dy + tileHeight - move.x) ~/ tileHeight) -
-        (move.x == 0 ? 2 : 1);
+        ((pos.dy + tileHeight - info.x) ~/ tileHeight) -
+        (info.x == 0 ? 2 : 1);
     int j = pos.dx ~/ tileWidth;
 
     return tiles[i][j];
@@ -68,7 +69,7 @@ class Board {
   void paint(Canvas canvas, Size size) {
     for (int i = 0; i < tiles.length; ++i) {
       for (int j = 0; j < tiles[i].length; ++j) {
-        tiles[i][j].paint(canvas, size, i, j, move.x);
+        tiles[i][j].paint(canvas, size, i, j, info.x);
       }
     }
   }

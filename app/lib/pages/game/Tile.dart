@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:app/pages/game/Board.dart';
 import 'package:flutter/material.dart';
 

@@ -1,7 +1,8 @@
+// ignore_for_file: file_names, use_key_in_widget_constructors
+
 import 'dart:async';
-// import 'package:app/pages/game/Board.dart';
 import 'package:app/pages/game/Board.dart';
-import 'package:app/pages/game/MoveBoard.dart';
+import 'package:app/pages/game/GameInfo.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app/pages/game/MyPainter.dart';
@@ -12,24 +13,24 @@ class Game extends StatefulWidget {
 }
 
 class GameState extends State<Game> {
-  MoveBoard move = MoveBoard();
-  Board board = Board(MoveBoard());
+  GameInfo info = GameInfo();
+  Board board = Board(GameInfo());
 
   GameState() {
-    board.move = move;
+    board.info = info;
     Timer.periodic(
         const Duration(milliseconds: 16),
         (timer) => setState(() {
-              move.move();
-              if (move.gameOver) {
+              info.move();
+              if (info.gameOver) {
                 timer.cancel();
               }
             }));
   }
 
   void handleTap(Offset pos) {
-    move.onTap = true;
-    move.pos = pos;
+    info.onTap = true;
+    info.pos = pos;
   }
 
   @override
