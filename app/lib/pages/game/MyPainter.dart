@@ -4,14 +4,17 @@ import 'package:app/pages/EndGame.dart';
 import 'package:app/pages/game/Board.dart';
 import 'package:app/pages/game/GameInfo.dart';
 import 'package:app/pages/game/Tile.dart';
+import 'package:app/persistance/Persistance.dart';
 import 'package:app/utils/PlaySoundOnTap.dart';
 import 'package:flutter/material.dart';
 import 'package:app/utils/ChangePage.dart';
 
 class MyPainter extends CustomPainter {
-  GameInfo info;
-  Board board;
   BuildContext context;
+
+  Board board;
+  GameInfo info;
+  Persistance persistance = Persistance();
 
   MyPainter(this.board, this.context) : info = board.info;
 
@@ -52,14 +55,12 @@ class MyPainter extends CustomPainter {
     info.gameOver = true;
     PlaySoundOnTap.playGameOver();
 
-    storeScore(info.score);
+    persistance.writeScore(info.score);
 
     Future.delayed(Duration.zero, () {
       ChangePage.change(context, EndGame(info.score));
     });
   }
-
-  void storeScore(int score) {}
 
   void paintScore(Canvas canvas, Size size) {
     var textPainter = TextPainter(

@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 import 'pages/Menu.dart';
 
 // TO DO:
-// - play sound
-// - store score
-// - highscore menu
 // - share on fb
 
 // WhiteTile - The game consists of a grid in which there are white/black tiles coming from
