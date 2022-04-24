@@ -43,7 +43,7 @@ class MyPainter extends CustomPainter {
     }
 
     if (info.x >= (size.height / (Board.nrLines - 1))) {
-      info.x = 0;
+      info.x %= (size.height / (Board.nrLines - 1));
       board.addNewLine();
       if (board.blackTileOnBottomLine()) {
         endGame();
