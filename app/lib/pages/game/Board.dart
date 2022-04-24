@@ -40,9 +40,26 @@ class Board {
       lastLine.add(Tile());
     }
 
-    int index = Random().nextInt(Board.nrColumns);
+    int index = getIndexForBlackTile();
     lastLine[index].isToPressed = true;
     tiles[Board.nrLines - 1] = lastLine;
+  }
+
+  int getIndexForBlackTile() {
+    int lastIndex = -1;
+    for (int j = 0; j < Board.nrColumns; ++j) {
+      if (tiles[Board.nrLines - 2][j].isToPressed) {
+        lastIndex = j;
+        break;
+      }
+    }
+
+    int index = Random().nextInt(Board.nrColumns);
+    while (index == lastIndex) {
+      index = Random().nextInt(Board.nrColumns);
+    }
+
+    return index;
   }
 
   Tile getTileAtPos(Offset pos, Size size) {

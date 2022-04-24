@@ -16,7 +16,9 @@ class GameInfo {
   bool gameOver = false;
 
   void increaseSpeed() {
-    if (score != 0 && score % GameInfo.thresholdToIncreaseSpeed == 0) {
+    if (score > 0 &&
+        score < 100 &&
+        score % GameInfo.thresholdToIncreaseSpeed == 0) {
       addX += GameInfo.increaseSpeedvalue;
     }
   }
